@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔮 塔罗牌占卜 | 心灵指引</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔮 塔罗牌占卜 🔮</h1>
+            <p class="subtitle">倾听内心的声音，探寻命运的指引</p>
+        </header>
+
+        <div class="question-section">
+            <label for="question">📝 你的问题（选填）：</label>
+            <input type="text" id="question" placeholder="例如：我的感情运势如何？" maxlength="100">
+        </div>
+
+        <div class="options-section">
+            <div class="option-group">
+                <label>📚 选择牌库：</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="deckType" value="1"> 🃏 大阿卡那 (22张)</label>
+                    <label><input type="radio" name="deckType" value="2"> 🃎 小阿卡那 (56张)</label>
+                    <label><input type="radio" name="deckType" value="3" checked> 🃟 全部牌 (78张)</label>
+                </div>
+            </div>
+
+            <div class="option-group">
+
+    <div class="option-group">
+    <label>🎴 抽取数量：</label>
+    <div class="draw-count-wrapper">
+        <select id="drawCountSelect">
+            <option value="1">1张 - 单牌阵</option>
+            <option value="3" selected>3张 - 三牌阵（过去-现在-未来）</option>
+            <option value="5">5张 - 十字阵</option>
+            <option value="7">7张 - 七脉轮阵</option>
+            <option value="10">10张 - 凯尔特十字</option>
+            <option value="custom">✨ 自定义（手动输入）</option>
+        </select>
+        <input type="number" id="customDrawCount" min="1" max="78" value="3" placeholder="1-78">
+    </div>
+    <div id="countWarning" style="display: none; color: #d63031; font-size: 12px; margin-top: 5px;"></div>
+</div>
+
+    <span id="countWarning" style="color: #d63031; font-size: 0.8rem; display: none;"></span>
+</div>
+
+        <button id="drawBtn" class="draw-btn">
+            <span class="btn-text">✨ 开始抽牌 ✨</span>
+        </button>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>洗牌中，请稍候...</p>
+        </div>
+
+        <div id="result" class="result hidden">
+            <div class="question-display" id="questionDisplay"></div>
+            <div class="cards-container" id="cardsContainer"></div>
+            
+            <div class="ai-option-section" id="aiOptionSection">
+                <div class="ai-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="aiAnalysisToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="ai-label">
+                        🤖 启用AI智能分析
+                        <span class="ai-desc">（AI将根据牌面和您的问题生成个性化解读）</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="reading" id="reading">
+                <h3>🔮 基础解读</h3>
+                <div class="reading-content" id="readingContent"></div>
+            </div>
+
+            <button id="resetBtn" class="reset-btn">🔄 重新占卜</button>
+        </div>
+    </div>
+
+    <script src="js/tarot-images.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
