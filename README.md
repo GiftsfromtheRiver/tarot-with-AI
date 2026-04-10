@@ -29,6 +29,7 @@
 ```bash
 git clone https://github.com/你的用户名/tarot-project.git
 cd tarot-project
+
 2. 配置 AI API（可选）
 编辑 backend/src/main/java/com/tarot/service/AIService.java
 
