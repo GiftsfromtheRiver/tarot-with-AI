@@ -29,63 +29,79 @@
 ```bash
 git clone https://github.com/你的用户名/tarot-project.git
 cd tarot-project
+```
 
-2. 配置 AI API（可选）
-编辑 backend/src/main/java/com/tarot/service/AIService.java
+### 2. 配置 AI API（可选）
 
-java
+编辑 `backend/src/main/java/com/tarot/service/AIService.java`
+
+```java
 // 修改这三行即可切换不同的 AI 服务
 private static final String API_KEY = "your-api-key";
 private static final String API_URL = "https://api.deepseek.com/v1/chat/completions";
 private static final String MODEL = "deepseek-chat";
-3. 启动后端
-bash
+```
+
+### 3. 启动后端
+
+```bash
 cd backend
 mvn spring-boot:run
+```
+
 控制台出现以下信息表示启动成功：
 
-text
+```text
 Tomcat started on port(s): 8081 (http)
 塔罗牌后端服务已启动: http://localhost:8081
-4. 访问前端
-开发环境：使用 VS Code Live Server 打开 frontend/index.html
+```
 
-生产环境：将 frontend 目录部署到任意静态服务器
+### 4. 访问前端
 
-🔌 切换 AI 服务
-只需修改 AIService.java 中的三个常量即可：
+- **开发环境**：使用 VS Code Live Server 打开 `frontend/index.html`
+- **生产环境**：将 `frontend` 目录部署到任意静态服务器
 
-参数	说明
-API_KEY	你的 API 密钥
-API_URL	API 接口地址
-MODEL	模型名称
-支持的 AI 服务示例
-AI 服务	API_URL	MODEL
-DeepSeek	https://api.deepseek.com/v1/chat/completions	deepseek-chat
-OpenAI	https://api.openai.com/v1/chat/completions	gpt-3.5-turbo
-智谱 AI	https://open.bigmodel.cn/api/paas/v4/chat/completions	glm-4
-通义千问	https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions	qwen-turbo
-本地 Ollama	http://localhost:11434/v1/chat/completions	llama2
-💡 不配置 API Key 时，系统会自动降级为模拟解读模式。
+## 🔌 切换 AI 服务
 
-📁 项目结构
-text
+只需修改 `AIService.java` 中的三个常量即可：
+
+| 参数 | 说明 |
+|------|------|
+| API_KEY | 你的 API 密钥 |
+| API_URL | API 接口地址 |
+| MODEL | 模型名称 |
+
+### 支持的 AI 服务示例
+
+| AI 服务 | API_URL | MODEL |
+|---------|---------|-------|
+| DeepSeek | `https://api.deepseek.com/v1/chat/completions` | `deepseek-chat` |
+| OpenAI | `https://api.openai.com/v1/chat/completions` | `gpt-3.5-turbo` |
+| 智谱 AI | `https://open.bigmodel.cn/api/paas/v4/chat/completions` | `glm-4` |
+| 通义千问 | `https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions` | `qwen-turbo` |
+| 本地 Ollama | `http://localhost:11434/v1/chat/completions` | `llama2` |
+
+> 💡 不配置 API Key 时，系统会自动降级为模拟解读模式。
+
+## 📁 项目结构
+
+```
 tarot-project/
-├── backend/                    # Spring Boot 后端
+├── backend/
 │   ├── src/main/java/com/tarot/
 │   │   ├── TarotApplication.java
-│   │   ├── controller/         # API 控制器
+│   │   ├── controller/
 │   │   │   ├── TarotController.java
 │   │   │   └── AIController.java
-│   │   ├── service/            # 业务逻辑
+│   │   ├── service/
 │   │   │   ├── TarotService.java
 │   │   │   └── AIService.java
-│   │   └── model/              # 数据模型
+│   │   └── model/
 │   │       └── Card.java
 │   ├── src/main/resources/
 │   │   └── application.properties
 │   └── pom.xml
-├── frontend/                   # 前端静态文件
+├── frontend/
 │   ├── index.html
 │   ├── css/
 │   │   └── style.css
@@ -94,16 +110,20 @@ tarot-project/
 │   │   └── tarot-images.js
 │   └── images/                 # 图片文件夹（详见下方说明）
 └── README.md
-📷 图片说明
-本项目使用私人塔罗牌稿件，不包含在开源代码中，但保留了完整的文件夹结构。
+```
 
-文件夹结构
-text
+## 📷 图片说明
+
+本项目使用**私人塔罗牌稿件**，不包含在开源代码中，但保留了完整的文件夹结构。
+
+### 文件夹结构
+
+```
 frontend/images/
-├── major/                      # 大阿卡那（22张）
+├── major/
 │   ├── 正位/
 │   └── 逆位/
-├── minor/                      # 小阿卡那（56张）
+├── minor/
 │   ├── 权杖/
 │   │   ├── 正位/
 │   │   └── 逆位/
@@ -117,32 +137,41 @@ frontend/images/
 │       ├── 正位/
 │       └── 逆位/
 └── 卡背/
-使用自己的图片
-按上述结构放置图片
+```
 
-命名规则：0-愚人.png、1-魔法师.jpg 等
+### 使用自己的图片
 
-建议使用 WebP 格式，单张控制在 50KB 以内
+1. 按上述结构放置图片
+2. 命名规则：`0-愚人.png`、`1-魔法师.jpg` 等
+3. 建议使用 WebP 格式，单张控制在 50KB 以内
 
-无图片时运行
-完全不放置图片也不影响功能，系统会自动降级为文字卡片显示（紫色渐变背景 + 牌名 + 牌意）。
+### 无图片时运行
 
-🎯 API 接口
-抽牌接口
-URL：POST /api/tarot/draw
+**完全不放置图片也不影响功能**，系统会自动降级为文字卡片显示。
 
-Content-Type：application/json
+## 🎯 API 接口
 
-请求体：
+### 抽牌接口
 
-json
+**URL**：`POST /api/tarot/draw`
+
+**请求体**：
+
+```json
 {
-    "deckType": 3,    // 1:大阿卡那, 2:小阿卡那, 3:全部
-    "drawCount": 3    // 1-78
+    "deckType": 3,
+    "drawCount": 3
 }
-响应：
+```
 
-json
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| deckType | int | 1:大阿卡那, 2:小阿卡那, 3:全部 |
+| drawCount | int | 抽取数量（1-78） |
+
+**响应**：
+
+```json
 {
     "success": true,
     "cards": [
@@ -155,41 +184,51 @@ json
         }
     ]
 }
-AI 解读接口
-URL：POST /api/ai/analyze
+```
 
-请求体：
+### AI 解读接口
 
-json
+**URL**：`POST /api/ai/analyze`
+
+**请求体**：
+
+```json
 {
     "question": "我的感情运势如何？",
     "cards": [...],
     "spreadType": "three"
 }
-🔧 常见问题
-Q：如何切换不同的 AI 服务？
-只需修改 AIService.java 中的 API_URL 和 MODEL，其他代码无需改动。
+```
 
-Q：没有 API Key 能使用吗？
+## 🔧 常见问题
+
+### Q：如何切换不同的 AI 服务？
+
+只需修改 `AIService.java` 中的 `API_URL` 和 `MODEL`，其他代码无需改动。
+
+### Q：没有 API Key 能使用吗？
+
 可以，系统会自动降级为模拟解读，功能完整可用。
 
-Q：图片加载慢怎么办？
-已实现卡背占位 + 懒加载
+### Q：图片加载慢怎么办？
 
-建议将图片压缩到 50KB 以下
+- 已实现卡背占位 + 懒加载
+- 建议将图片压缩到 50KB 以下
+- 或使用 WebP 格式
 
-或使用 WebP 格式
+### Q：如何修改牌意？
 
-Q：如何修改牌意？
-编辑 TarotService.java 中的 MEANINGS 静态块。
+编辑 `TarotService.java` 中的 `MEANINGS` 静态块。
 
-📄 开源协议
+## 📄 开源协议
+
 MIT License
 
-🙏 致谢
-DeepSeek - AI 服务支持
+## 🙏 致谢
 
-塔罗牌图片为私人稿件
+- [DeepSeek](https://deepseek.com/) - AI 服务支持
+- 塔罗牌图片为私人稿件
 
-📧 联系方式
+## 📧 联系方式
+
 如有问题，欢迎提 Issue
