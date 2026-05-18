@@ -6,7 +6,8 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class AIService {
     
@@ -114,53 +115,25 @@ public class AIService {
                 .replace("\t", "\\t");
     }
     
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+    
     private String extractContentFromDeepSeek(String response) {
         try {
-            System.out.println("开始解析响应...");
+            JsonNode node = MAPPER.readTree(response);
+            String content = node.path("choices").path(0).path("message").path("content").asText();
             
-            // 方法1：查找 "content" 字段
-            int contentIndex = response.indexOf("\"content\"");
-            if (contentIndex == -1) {
-                System.err.println("未找到 content 字段");
-                System.err.println("完整响应: " + response);
-                return "AI服务响应格式异常";
-            }
-            
-            // 找到 content 后面的冒号
-            int colonIndex = response.indexOf(":", contentIndex);
-            if (colonIndex == -1) {
-                return "解析失败";
-            }
-            
-            // 找到第一个引号
-            int firstQuote = response.indexOf("\"", colonIndex);
-            if (firstQuote == -1) {
-                return "解析失败";
-            }
-            
-            // 找到结束引号
-            int lastQuote = response.indexOf("\"", firstQuote + 1);
-            if (lastQuote == -1) {
-                return "解析失败";
-            }
-            
-            String content = response.substring(firstQuote + 1, lastQuote);
-            // 处理转义字符
-            content = content.replace("\\n", "\n")
-                            .replace("\\\"", "\"")
-                            .replace("\\\\", "\\");
-            
-            System.out.println("解析成功，内容长度: " + content.length());
-            if (content.isEmpty()) {
+            if (content == null || content.isEmpty()) {
+                System.err.println("AI返回内容为空");
                 return "AI返回内容为空";
             }
             
+            System.out.println("解析成功，内容长度: " + content.length());
             return content;
             
         } catch (Exception e) {
+            System.err.println("解析响应失败: " + response);
             e.printStackTrace();
-            System.err.println("解析响应时出错: " + response);
-            return "AI服务解析异常: " + e.getMessage();
+            return "AI服务响应解析异常: " + e.getMessage();
         }
     }
     
