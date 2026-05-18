@@ -1,6 +1,7 @@
 package com.tarot.service;
 
 import com.tarot.model.Card;
+import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
@@ -146,13 +147,13 @@ public class TarotService {
             drawCount = deck.size();
         }
         
-        Random random = new Random();
+        
         List<Card> result = new ArrayList<>();
         
         for (int i = 0; i < drawCount && !deck.isEmpty(); i++) {
-            int index = random.nextInt(deck.size());
+            int index = ThreadLocalRandom.current().nextInt(deck.size());
             String cardName = deck.get(index);
-            boolean upright = random.nextBoolean();
+            boolean upright = ThreadLocalRandom.current().nextBoolean();
             String meaning = getCardMeaning(cardName, upright);
             String type = getCardType(cardName);
             
